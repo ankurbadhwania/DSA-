@@ -1,0 +1,25 @@
+// insert at bottom of stack
+
+class Solution {
+    public Stack<Integer> insertAtBottom(Stack<Integer> st, int x) {
+        if(st.isEmpty()){
+            st.push(x);
+            return st;
+        }
+        int top = st.pop();  
+        insertAtBottom(st, x);
+        st.push(top);
+        return st;
+        // List<Integer> l = new ArrayList<>();
+        // while(!st.isEmpty()){
+        //     int top = st.peek();
+        //     l.add(top);
+        //     st.pop();
+        // }
+        // s.push(x);
+        // for(int i = l.size()-1; i>= 0; i--){
+        //     s.push(l.get(i));
+        // }
+        
+    }
+}
