@@ -1,0 +1,23 @@
+// reverse stack using recursion
+
+class Solution {
+     public static Stack<Integer> insertAtBottom(Stack<Integer> st, int x) {
+        if(st.isEmpty()){
+            st.push(x);
+            return st;
+        }
+        int top = st.pop();  
+        insertAtBottom(st, x);
+        st.push(top);
+        return st;
+     }
+     
+    static void reverse(Stack<Integer> St) {
+        if(St.isEmpty()){
+            return;
+        }
+        int top = St.pop();
+        reverse(St);
+        insertAtBottom(St, top);
+    }
+}
