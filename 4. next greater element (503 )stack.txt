@@ -1,0 +1,31 @@
+// next greater element II circular integer array(503)
+
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        Stack<Integer> stack = new Stack<>();
+        int arr[] = new int[nums.length];
+        stack.push(0);
+        for(int i = 1; i < nums.length; i++){
+            while(!stack.isEmpty() && nums[i] > nums[stack.peek()]){
+                arr[stack.peek()] = nums[i];
+                stack.pop();
+            }
+            stack.push(i);
+        }
+        
+        if(stack.isEmpty()) return arr;
+
+        for(int i = 0; i < nums.length; i++){
+            while(!stack.isEmpty() && nums[stack.peek()] < nums[i]){
+                arr[stack.peek()] = nums[i];
+                stack.pop();
+            }
+        }
+
+        while(!stack.isEmpty()){
+            int top = stack.pop();
+            arr[top] = -1;
+        }
+        return arr;
+    }
+}

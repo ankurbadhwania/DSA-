@@ -1,0 +1,32 @@
+//leetcode 901 online stock span
+
+class StockSpanner {
+    Stack<Integer> stack;
+    int arr[];
+    int i;
+    public StockSpanner() {
+        stack = new Stack();
+        arr = new int [10000]; 
+        i = 0;
+    }
+
+    public int next(int price) {
+        int ans = i + 1;
+        arr[i] = price;
+        while(!stack.isEmpty() && arr[stack.peek()] <= arr[i]){
+            stack.pop();
+        }
+        if(!stack.isEmpty()){
+            ans = i - stack.peek();
+        }
+        stack.push(i);
+        i++;
+        return ans;
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
