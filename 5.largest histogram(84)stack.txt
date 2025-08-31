@@ -1,0 +1,41 @@
+//leetcode 84 largest rectangle in histogram
+
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        int nextSmaller[] = new int [n];
+        int prevSmaller[] = new int [n];
+        int maxArea = heights[0];
+        Stack<Integer> stack = new Stack<>();
+        for(int i = 0; i < heights.length; i++){
+            while(!stack.isEmpty() && heights[i] < heights[stack.peek()]){
+                nextSmaller[stack.peek()] = i;
+                stack.pop();
+            }
+            stack.push(i);
+        }
+        while(!stack.isEmpty()){
+            nextSmaller[stack.peek()] = n;
+            stack.pop();
+        }
+
+        for(int i = heights.length-1; i >= 0; i--){
+            while(!stack.isEmpty() && heights[i] < heights[stack.peek()]){
+                prevSmaller[stack.peek()] = i;
+                stack.pop();
+            }
+            stack.push(i);
+        }
+        while(!stack.isEmpty()){
+            prevSmaller[stack.peek()] = -1;
+            stack.pop();
+        }
+
+
+        for(int i = 0; i < n; i++){
+            int area = heights[i] * (nextSmaller[i] - prevSmaller[i]-1);
+            maxArea = Math.max(area, maxArea);
+        }
+        return maxArea;
+    }
+}
