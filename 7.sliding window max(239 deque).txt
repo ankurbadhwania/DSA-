@@ -1,0 +1,27 @@
+//leetcode 239 sliding window max dequeue
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if(nums.length == 1) return nums;
+        int arr[] = new int[nums.length-k+1];
+        Deque<Integer> dq = new ArrayDeque<>();
+        for(int i = 0; i < k; i++){
+            while(!dq.isEmpty() && nums[i] > nums[dq.peekLast()]){
+                dq.removeLast();
+            }
+            dq.add(i);
+        }
+        for(int i = k; i < nums.length; i++){
+            arr[i-k] = nums[dq.peekFirst()];
+            while(!dq.isEmpty() && dq.peekFirst() <= i-k){
+                dq.removeFirst();
+            }
+            while(!dq.isEmpty() && nums[i] > nums[dq.peekLast()]){
+                dq.removeLast();
+            }
+            dq.add(i);
+        }
+        arr[nums.length-k] = nums[dq.peekFirst()];
+        return arr;
+    }
+}
