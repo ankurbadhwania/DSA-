@@ -1,0 +1,28 @@
+//fractional knapsack greedy gfg//
+
+class Solution {
+    public double fractionalKnapsack(int[] val, int[] wt, int capacity) {
+        // code here
+        int n = val.length;
+        double ans = 0;
+        double ratio[][] = new double [n][2];
+        for(int i = 0; i < n; i++){
+            ratio[i][0] = i;
+            ratio[i][1] = (double)val[i] / wt[i];
+        }
+        Arrays.sort(ratio, Comparator.comparingDouble(o -> o[1]));
+        for(int i = n-1; i >= 0; i--){
+            int idx = (int) ratio[i][0];
+            int available = wt[idx];
+            if(capacity >= available){
+                ans += val[(int)ratio[i][0]];
+                capacity -= available;
+            }
+            else if(capacity < available){
+                ans += ((double)val[(int)ratio[i][0]] / wt[(int)ratio[i][0]]) * capacity;
+                return ans;
+            }
+        }
+        return ans;
+    }
+}
