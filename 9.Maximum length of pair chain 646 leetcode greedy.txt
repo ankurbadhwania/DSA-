@@ -1,0 +1,16 @@
+//Maximum length of pair chain leetcode 646 greedy
+
+class Solution {
+    public int findLongestChain(int[][] pairs) {
+        Arrays.sort(pairs, Comparator.comparingDouble(o -> o[1]));
+        int ans = 1;
+        int prev = 0;
+        for(int i = 1; i < pairs.length; i++){
+            if(pairs[i][0] > pairs[prev][1]){
+                ans++;
+                prev = i;
+            }
+        }
+        return ans;
+    }
+}
