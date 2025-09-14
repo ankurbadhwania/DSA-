@@ -1,0 +1,42 @@
+// level order leetcode 102 
+class Solution {
+    public List<List<Integer>> level(TreeNode root, List<Integer>list){
+        List<List<Integer>> l = new ArrayList<>();
+        if(root == null) return l;
+        Queue<TreeNode> q = new LinkedList<>();
+        
+        q.add(root);
+        q.add(null);
+        list.add(root.val);
+        l.add(new ArrayList<>(list));
+        list.clear();
+
+        while(!q.isEmpty()){
+            TreeNode currNode = q.peek();
+            if(currNode == null){
+                q.remove();
+                if(q.isEmpty()) return l;
+                q.add(null);
+                l.add(new ArrayList<>(list));
+                list.clear();
+            }
+            else{
+                if(currNode.left != null){
+                    q.add(currNode.left);
+                    list.add(currNode.left.val);
+                }
+                if(currNode.right != null){
+                    q.add(currNode.right);
+                    list.add(currNode.right.val);
+                } 
+                q.remove();
+            }
+        }
+        return l;
+    }
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        return level(root,list);
+    }
+}
