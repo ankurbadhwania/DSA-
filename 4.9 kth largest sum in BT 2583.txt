@@ -1,0 +1,34 @@
+// kth largest sum in BT lt 2583
+class Solution {
+    public long kthLargestLevelSum(TreeNode root, int k) {
+        int level = 1;
+        Queue<Long> pq = new PriorityQueue<>(Collections.reverseOrder());
+        long sum = 0;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+        while(!q.isEmpty()){
+            TreeNode num = q.poll();
+            if(num == null) {
+                pq.add(sum);
+                if(q.isEmpty()) break;
+                level++;
+                q.add(null);
+                sum = 0;
+            }
+            else{
+                sum += num.val;
+                if(num.left != null) q.add(num.left);
+                if(num.right != null) q.add(num.right);
+            }
+        }
+        if(k > level) return -1;
+        int i = 1;
+        long ans = 0;
+        while(!pq.isEmpty() && i <= k){
+            ans = pq.poll();
+            i++;
+        }
+        return ans;
+    }
+}
