@@ -1,0 +1,31 @@
+//validate bst leetcode 98
+
+class Solution {
+    public boolean check(TreeNode root, long min, long max){
+        if(root == null) return true;
+        if(root.val >= max || root.val <= min) return false;
+        return check(root.left, min, root.val) && check(root.right, root.val, max);
+    }
+    public boolean isValidBST(TreeNode root) {
+       return check(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+}
+
+// class Solution {
+//     public void inorder(TreeNode root, List<Integer> l){
+//         if(root == null) return;
+//         inorder(root.left, l);
+//         l.add(root.val);
+//         inorder(root.right, l);
+//     }
+//     public boolean isValidBST(TreeNode root) {
+//         List<Integer> l = new ArrayList<>();
+//         inorder(root, l);
+//         for(int i = 1; i < l.size(); i++){
+//             if(l.get(i) <= l.get(i-1)) return false;
+//         }
+//         return true;
+//     }
+// }
+
+
