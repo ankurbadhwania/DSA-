@@ -1,0 +1,26 @@
+// bst to balance bst lt 1382
+class Solution {
+    public void sortedNodes(TreeNode root, List<Integer> l){
+        if(root == null) return;
+        sortedNodes(root.left, l);
+        l.add(root.val);
+        sortedNodes(root.right, l);
+    }
+
+    public TreeNode makeBst(TreeNode root, List<Integer> l, int start, int end){
+        if(start > end) return null;
+        int mid = start + (end - start)/2;
+        TreeNode node = new TreeNode(l.get(mid));
+        node.left = makeBst(node.left, l, start, mid - 1);
+        node.right = makeBst(node.right, l, mid + 1, end);
+        return node;
+    }
+
+    public TreeNode balanceBST(TreeNode root) {
+        List<Integer> l = new ArrayList<>();
+        sortedNodes(root, l);
+        int mid = (l.size() - 1) / 2;
+        return makeBst(root, l, 0, l.size() - 1);
+
+    }
+}
